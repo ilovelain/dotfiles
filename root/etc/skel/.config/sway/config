@@ -31,7 +31,7 @@ client.urgent #00000040 #00000040 #E0F2FE90 #00000040
 client.placeholder #00000040 #00000040 #E0F2FE90 #00000040
 
 bindsym mod4+return exec kitty
-bindsym --to-code mod4+b exec qutebrowser
+bindsym --to-code mod4+b exec firefox --profile $HOME/.mozilla/firefox/profile.base
 bindsym print exec grim $HOME/Pictures/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && wl-copy < $HOME/Pictures/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png
 
 bindsym --to-code mod4+shift+w layout toggle tabbed split
