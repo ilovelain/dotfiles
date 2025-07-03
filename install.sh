@@ -67,7 +67,7 @@ mount /dev/"$DRIVE""$SEPARATOR"2 /mnt
 mkdir -p /mnt/boot/efi
 mount /dev/"$DRIVE""$SEPARATOR"1 /mnt/boot/efi
 
-pacstrap /mnt base base-devel linux linux-firmware linux-headers openssh grub efibootmgr networkmanager qt6-wayland i2pd qutebrowser wayland zsh git neovim swaybg nodejs htop pulseaudio alsa-lib alsa-utils pulsemixer sway seatd waybar grim wl-clipboard ranger kitty ripgrep lazygit ttc-iosevka ttf-iosevka-nerd
+pacstrap /mnt base base-devel linux linux-firmware linux-headers openssh grub efibootmgr networkmanager firefox wayland zsh git neovim swaybg nodejs htop pulseaudio alsa-lib alsa-utils pulsemixer sway seatd waybar grim wl-clipboard ranger kitty ripgrep lazygit ttc-iosevka ttf-iosevka-nerd
 
 cp -af ./root/* /mnt/
 
@@ -80,11 +80,6 @@ arch-chroot /mnt /bin/zsh -c "systemctl enable NetworkManager"
 
 arch-chroot /mnt /bin/zsh -c "timedatectl set-timezone Europe/Moscow"
 arch-chroot /mnt /bin/zsh -c "timedatectl set-ntp true"
-
-arch-chroot /mnt /bin/zsh -c "systemctl enable systemd-resolved"
-ln -sf /mnt/run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
-
-arch-chroot /mnt /bin/zsh -c "systemctl enable i2pd"
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
