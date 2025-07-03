@@ -102,7 +102,7 @@ user_pref("app.normandy.api_url", "");
 user_pref("browser.ping-centre.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
-user_pref("layout.css.prefers-color-scheme.content-override", 2);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("app.update.suppressPrompts", true);
 user_pref("accessibility.force_disabled", 1);
