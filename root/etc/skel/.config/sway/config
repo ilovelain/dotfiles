@@ -4,7 +4,7 @@ input * {
 }
 
 output * {
-    mode 1920x1080@120Hz
+    mode 1920x1080@144Hz
     bg $HOME/Pictures/Wallpaper.jpg fill
 }
 
