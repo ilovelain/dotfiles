@@ -148,6 +148,7 @@ user_pref("browser.startup.homepage_override.mstone", "ignore");
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 user_pref("browser.urlbar.showSearchTerms.enabled", false);
+user_pref("xpinstall.signatures.required", false);
 user_pref("extensions.activeThemeID", "{2db5ae19-2e89-4a71-a5f2-da0e2bf69917}");
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
