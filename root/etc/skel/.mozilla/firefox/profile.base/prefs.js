@@ -152,3 +152,4 @@ user_pref("xpinstall.signatures.required", false);
 user_pref("extensions.activeThemeID", "{2db5ae19-2e89-4a71-a5f2-da0e2bf69917}");
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+user_pref("dom.security.https_only_mode", false);
