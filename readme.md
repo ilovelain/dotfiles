@@ -1,5 +1,3 @@
-# dotfiles
-
 ## Installation
 ```bash
 pacman -Syy git dialog
