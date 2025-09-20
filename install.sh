@@ -67,7 +67,7 @@ mount /dev/"$DRIVE""$SEPARATOR"2 /mnt
 mkdir -p /mnt/boot/efi
 mount /dev/"$DRIVE""$SEPARATOR"1 /mnt/boot/efi
 
-pacstrap /mnt base base-devel linux linux-firmware linux-headers openssh grub efibootmgr networkmanager firefox wayland zsh git neovim swaybg pulseaudio alsa-lib alsa-utils pulsemixer sway seatd waybar grim wl-clipboard ranger kitty ripgrep i2pd proxychains nmap lazygit ttc-iosevka ttf-iosevka-nerd
+pacstrap /mnt base base-devel linux linux-firmware linux-headers openssh grub efibootmgr networkmanager firefox wayland zsh git neovim swaybg pulseaudio alsa-lib alsa-utils pulsemixer gnome-boxes sway seatd waybar grim wl-clipboard ranger kitty ripgrep i2pd proxychains nmap lazygit ttc-iosevka ttf-iosevka-nerd
 
 cp -af ./root/* /mnt/
 
