@@ -96,13 +96,13 @@ user_pref("browser.download.always_ask_before_handling_new_types", true);
 user_pref("extensions.enabledScopes", 5);
 user_pref("extensions.postDownloadThirdPartyPrompt", false);
 user_pref("browser.contentblocking.category", "strict");
-user_pref("privacy.sanitize.sanitizeOnShutdown", true);
+user_pref("privacy.sanitize.sanitizeOnShutdown", false);
 user_pref("privacy.clearOnShutdown_v2.cache", true);
 user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", true);
 user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", true);
 user_pref("privacy.clearOnShutdown_v2.downloads", true);
 user_pref("privacy.clearOnShutdown_v2.formdata", true);
-user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true);
+user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", false);
 user_pref("privacy.clearSiteData.cache", true);
 user_pref("privacy.clearSiteData.cookiesAndStorage", false);
 user_pref("privacy.clearSiteData.historyFormDataAndDownloads", true);
@@ -154,4 +154,5 @@ user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("dom.security.https_only_mode", true);
 user_pref("browser.chrome.site_icons", false);
+
 
