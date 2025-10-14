@@ -60,7 +60,6 @@ user_pref("media.memory_cache_max_size", 65536);
 user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("toolkit.winRegisterApplicationRestart", false);
 user_pref("browser.shell.shortcutFavicons", false);
-user_pref("_user.js.parrot", "1200 syntax error: the parrot's a stiff!");
 user_pref("security.ssl.require_safe_negotiation", true);
 user_pref("security.tls.enable_0rtt_data", false);
 user_pref("security.OCSP.enabled", 1);
@@ -157,3 +156,4 @@ user_pref("browser.chrome.site_icons", false);
 user_pref("network.proxy.socks", "localhost");
 user_pref("network.proxy.socks_port", 4445);
 user_pref("network.proxy.type", 1);
+
