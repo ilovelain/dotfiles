@@ -154,5 +154,6 @@ user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("dom.security.https_only_mode", true);
 user_pref("browser.chrome.site_icons", false);
-
-
+user_pref("network.proxy.socks", "localhost");
+user_pref("network.proxy.socks_port", 4445);
+user_pref("network.proxy.type", 1);
