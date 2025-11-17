@@ -1,90 +1,51 @@
-DIALOG_TITLE="Dotfiles Installer"
-DIALOG_BACKTITLE="Dotfiles Installer --- https://github.com/ilovelain/dotfiles"
-
-dialog --clear --colors --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" \
-    --msgbox "Welcome to the Dotfiles Installer, the current script only works with \ZbArch Based\Zn distributions on \ZbSystemd\Zn." 7 50
-
-DRIVES=($(lsblk -d -n -o NAME,SIZE))
-ITEMS=()
-for ((i=0; i<${#DRIVES[@]}; i+=2)); do 
-    ITEMS+=("$((i/2+1))" "/dev/${DRIVES[i]} (${DRIVES[i+1]})")
-done
-
-if CHOICE=$(dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --ok-label "Next" --menu "Select drive:" 15 50 ${#ITEMS[@]} "${ITEMS[@]}" 3>&1 1>&2 2>&3); then
-    DRIVE="${DRIVES[$((CHOICE*2-2))]}"
-else
-    exit 0
-fi
-
-SEPARATOR=""
-if [[ $DRIVE == *"nvme"* ]]; then
-    SEPARATOR="p"
-fi
-
-if USERNAME=$(dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --ok-label "Next" --inputbox "Enter username:" 8 40 3>&1 1>&2 2>&3); then
-    if [ -z "$USERNAME" ]; then
-        dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --msgbox "Username cannot be empty!" 10 40
-        exit 1
-    fi
-else
-    exit 0
-fi
-
-if USERNAME_PASSWORD=$(dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --ok-label "Next" --inputbox "Enter username password:" 8 40 3>&1 1>&2 2>&3); then
-    if [ -z "$USERNAME_PASSWORD" ]; then
-        dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --msgbox "Username password cannot be empty!" 10 40
-        exit 1
-    fi
-else
-    exit 0
-fi
-
-if ROOT_PASSWORD=$(dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --ok-label "Next" --inputbox "Enter root password:" 8 40 3>&1 1>&2 2>&3); then
-    if [ -z "$ROOT_PASSWORD" ]; then
-        dialog --clear --title "$DIALOG_TITLE" --backtitle "$DIALOG_BACKTITLE" --msgbox "Root password cannot be empty!" 10 40
-        exit 1
-    fi
-else
-    exit 0
-fi
-
-clear
-
-git clone https://github.com/ohmyzsh/ohmyzsh.git ./root/usr/share/oh-my-zsh
-git clone https://github.com/zsh-users/zsh-autosuggestions ./root/usr/share/oh-my-zsh/plugins/zsh-autosuggestions
-git clone https://github.com/alexanderjeurissen/ranger_devicons.git ./root/etc/skel/.config/ranger/plugins/ranger_devi
-echo "default_linemode devicons" >> ./root/etc/skel/.config/ranger/rc.conf
-
-wipefs --all /dev/"$DRIVE"
-parted /dev/"$DRIVE" mklabel gpt
-parted /dev/"$DRIVE" mkpart primary fat32 1MiB 1024MiB
-parted /dev/"$DRIVE" set 1 esp on
-parted /dev/"$DRIVE" mkpart primary ext4 1024MiB 100%
-yes | mkfs.vfat /dev/"$DRIVE""$SEPARATOR"1
-yes | mkfs.ext4 /dev/"$DRIVE""$SEPARATOR"2
-
-mount /dev/"$DRIVE""$SEPARATOR"2 /mnt
-mkdir -p /mnt/boot/efi
-mount /dev/"$DRIVE""$SEPARATOR"1 /mnt/boot/efi
-
-pacstrap /mnt base base-devel linux linux-firmware linux-headers openssh grub efibootmgr networkmanager firefox wayland zsh git neovim swaybg pulseaudio alsa-lib alsa-utils pulsemixer gnome-boxes sway seatd waybar grim wl-clipboard ranger kitty ripgrep lazygit ttc-iosevka ttf-iosevka-nerd
-
-cp -af ./root/* /mnt/
-
-arch-chroot /mnt /bin/zsh -c "useradd -m -s /bin/zsh $USERNAME"
-arch-chroot /mnt /bin/zsh -c "echo '$USERNAME:$USERNAME_PASSWORD' | chpasswd"
-arch-chroot /mnt /bin/zsh -c "echo '$USERNAME ALL=(ALL:ALL) ALL' | tee -a /etc/sudoers"
-echo "$USERNAME" > /mnt/etc/hostname
-
-arch-chroot /mnt /bin/zsh -c "systemctl enable NetworkManager"
-
-arch-chroot /mnt /bin/zsh -c "timedatectl set-timezone Europe/Moscow"
-arch-chroot /mnt /bin/zsh -c "timedatectl set-ntp true"
-
-genfstab -U /mnt >> /mnt/etc/fstab
-
-arch-chroot /mnt /bin/zsh -c "grub-install /dev/$DRIVE"
-arch-chroot /mnt /bin/zsh -c "grub-mkconfig -o /boot/grub/grub.cfg"
-
-arch-chroot /mnt /bin/zsh -c "chsh -s /bin/zsh root"
-arch-chroot /mnt /bin/zsh -c "echo 'root:$ROOT_PASSWORD' | chpasswd"
+mkpart primary fat32 1MiB 513MiB
+set 1 esp on
+name 1 EFI
+mkpart primary linux-swap 513MiB 65GiB
+name 2 swap
+mkpart primary ext4 65GiB 100%
+name 3 root
+print
+quit
+EOF
+mkfs.vfat -F 32 /dev/nvme0n1p1
+mkswap /dev/nvme0n1p2
+swapon /dev/nvme0n1p2
+mkfs.ext4 /dev/nvme0n1p3
+mkdir --parents /mnt/gentoo
+mount /dev/nvme0n1p3 /mnt/gentoo
+mkdir --parents /mnt/gentoo/efi
+mount /dev/nvme0n1p1 /mnt/gentoo/efi
+wget --directory-prefix=/mnt/gentoo https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/$(curl --silent https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/latest-stage3-amd64-musl.txt | grep --only-matching '.*.tar.xz')
+tar xpvf /mnt/gentoo/*.tar.xz --xattrs-include='*.*' --numeric-owner --directory=/mnt/gentoo
+rm --force /mnt/gentoo/*.tar.xz
+cp --recursive ./root/* /mnt/gentoo/
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge-webrsync'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge --sync'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge --verbose --update --deep --newuse @world'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-kernel/linux-firmware'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-kernel/gentoo-kernel-bin'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-libs/timezone-data'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-apps/musl-locales'
+arch-chroot /mnt/gentoo /bin/bash -c 'env-update && source /etc/profile'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge net-misc/dhcpcd'
+arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add dhcpcd default'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-admin/sysklogd'
+arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add sysklogd default'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge net-misc/chrony'
+arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add chronyd default'
+arch-chroot /mnt/gentoo /bin/bash -c 'echo "root:chaoschead" | chpasswd'
+arch-chroot /mnt/gentoo /bin/bash -c 'useradd -m -G users,wheel,audio -s /bin/bash lain'
+arch-chroot /mnt/gentoo /bin/bash -c 'echo "lain:chaoschead" | chpasswd'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-fs/genfstab'
+arch-chroot /mnt/gentoo /bin/bash -c 'genfstab -U / >> /etc/fstab'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-boot/grub'
+arch-chroot /mnt/gentoo /bin/bash -c 'grub-install --efi-directory=/efi'
+arch-chroot /mnt/gentoo /bin/bash -c 'grub-mkconfig -o /boot/grub/grub.cfg'
+arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add elogind boot'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-admin/doas'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-misc/neofetch'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge dev-libs/wayland'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge --pretend --depclean'
+umount --recursive /mnt/gentoo/
