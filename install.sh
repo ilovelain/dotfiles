@@ -1,3 +1,4 @@
+parted /dev/nvme0n1 << EOF
 mkpart primary fat32 1MiB 513MiB
 set 1 esp on
 name 1 EFI
