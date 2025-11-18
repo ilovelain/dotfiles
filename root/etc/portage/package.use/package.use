@@ -1,0 +1,3 @@
+sys-kernel/installkernel dracut 
+x11-libs/libdrm video_cards_radeon
+gui-apps/swaybg gdk-pixbuf

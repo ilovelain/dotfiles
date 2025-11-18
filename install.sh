@@ -1,4 +1,5 @@
 parted /dev/nvme0n1 << EOF
+mklabel gpt
 mkpart primary fat32 1MiB 513MiB
 set 1 esp on
 name 1 EFI
@@ -30,6 +31,8 @@ arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-kernel/gentoo-kernel-bin'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-libs/timezone-data'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-apps/musl-locales'
 arch-chroot /mnt/gentoo /bin/bash -c 'env-update && source /etc/profile'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge net-wireless/iwd'
+arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add iwd default'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge net-misc/dhcpcd'
 arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add dhcpcd default'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-admin/sysklogd'
@@ -48,5 +51,10 @@ arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add elogind boot'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-admin/doas'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-misc/neofetch'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge dev-libs/wayland'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-wm/sway'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/swaybg'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/foot'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/grim'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/wl-clipboard'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge --pretend --depclean'
 umount --recursive /mnt/gentoo/
