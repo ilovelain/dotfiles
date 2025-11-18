@@ -1,3 +1,8 @@
+input * {
+    xkb_layout us,ru
+    xkb_options grp:win_space_toggle
+}
+
 output * {
     mode 1920x1080@144Hz
     bg /usr/share/backgrounds/sway/background.png fill
