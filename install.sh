@@ -56,5 +56,6 @@ arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/swaybg'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/foot'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/grim'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/wl-clipboard'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/waybar'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge --pretend --depclean'
 umount --recursive /mnt/gentoo/

@@ -10,7 +10,7 @@ exec_always {
 
 bar swaybar_command waybar
 
-font Iosevka 15
+font IosevkaTermNerdFont 15
 tiling_drag disable
 
 smart_gaps on
