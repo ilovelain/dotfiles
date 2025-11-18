@@ -1,11 +1,12 @@
 {
     "height": 30,
-    "modules-center": ["clock"],
+    "modules-center": ["custom/clock"],
     "modules-right": ["sway/language", "pulseaudio"],
 
-    "clock": {
-        "format": "{:%a, %d %B %H:%M}",
-        "tooltip": false
+    "custom/clock": {
+        "format": "{}",
+        "interval": 1,
+        "exec": "date '+%a, %d %B %H:%M'"
     },
 
     "sway/language": {
