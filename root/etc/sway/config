@@ -31,7 +31,7 @@ client.unfocused #23272ebf #23272ebf #abb2bf #000000 #23272ebf
 client.urgent #2f343a #900000 #abb2bf #000000 #23272ebf
 
 bindsym mod4+return exec foot
-bindsym --to-code mod4+b exec firefox --profile $HOME/.mozilla/firefox/profile.base
+bindsym --to-code mod4+b exec qutebrowser
 bindsym print exec grim $HOME/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && wl-copy < $HOME/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png
 
 bindsym --to-code mod4+shift+w layout toggle tabbed split
