@@ -1,4 +1,3 @@
-emerge sys-fs/cryptsetup
 parted /dev/nvme0n1 << EOF
 mklabel gpt
 mkpart primary fat32 1MiB 513MiB
@@ -8,17 +7,14 @@ mkpart primary linux-swap 513MiB 65GiB
 name 2 swap
 mkpart primary ext4 65GiB 100%
 name 3 root
-print
 quit
 EOF
 mkfs.vfat -F 32 /dev/nvme0n1p1
 mkswap /dev/nvme0n1p2
 swapon /dev/nvme0n1p2
-cryptsetup luksFormat /dev/nvme0n1p3
-cryptsetup luksOpen /dev/nvme0n1p3 encrypted_root
-mkfs.ext4 /dev/mapper/encrypted_root
+mkfs.ext4 /dev/nvme0n1p3
 mkdir --parents /mnt/gentoo
-mount /dev/mapper/encrypted_root /mnt/gentoo
+mount /dev/nvme0n1p3 /mnt/gentoo
 mkdir --parents /mnt/gentoo/efi
 mount /dev/nvme0n1p1 /mnt/gentoo/efi
 wget --directory-prefix=/mnt/gentoo https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/$(curl --silent https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/latest-stage3-amd64-musl.txt | grep --only-matching '.*.tar.xz')
