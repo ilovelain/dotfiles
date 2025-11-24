@@ -16,6 +16,7 @@ c.content.media.audio_video_capture = False
 c.content.notifications.enabled = False
 c.content.mouse_lock = False
 c.content.javascript.enabled = False
+c.completion.web_history.max_items = 0
 config.set("content.javascript.enabled", True, "https://*")
 c.qt.chromium.experimental_web_platform_features = 'never'
 c.colors.webpage.darkmode.enabled = True
