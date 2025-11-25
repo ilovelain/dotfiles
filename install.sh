@@ -60,7 +60,5 @@ arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/wl-clipboard'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-editors/neovim'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge www-client/qutebrowser'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge media-sound/pulsemixer'
-arch-chroot /mnt/gentoo /bin/bash -c 'emerge net-vpn/i2pd'
-arch-chroot /mnt/gentoo /bin/bash -c 'rc-update add i2pd default'1
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge --pretend --depclean'
 umount --recursive /mnt/gentoo/
