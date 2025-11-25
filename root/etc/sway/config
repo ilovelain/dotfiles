@@ -25,7 +25,7 @@ gaps outer 5
 smart_borders on
 default_border pixel 3
 
-client.focused #abb2bf #abb2bf #23272e #000000 #abb2bfbf
+client.focused #353a44 #353a44 #abb2bf #000000 #abb2bfbf
 client.focused_inactive #333333 #5f676a #abb2bf #000000 #23272ebf
 client.unfocused #23272ebf #23272ebf #abb2bf #000000 #23272ebf
 client.urgent #2f343a #900000 #abb2bf #000000 #23272ebf
