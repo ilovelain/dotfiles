@@ -1,6 +1,7 @@
 config.load_autoconfig(False)
-c.url.start_pages = 'socks5://127.0.0.1:1337'
-c.url.searchengines = {'DEFAULT': 'http://duckduckgo.com/?q={}'}
+c.url.start_pages = 'https://duckduckgo.com/'
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}'}
+c.content.proxy = 'socks5://127.0.0.1:1080';
 c.content.proxy_dns_requests = True
 c.content.javascript.enabled = True
 
