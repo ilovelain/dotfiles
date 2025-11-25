@@ -1,28 +1,14 @@
 config.load_autoconfig(False)
-c.url.start_pages = 'http://127.0.0.1:7070'
-c.url.searchengines = {'DEFAULT': 'http://duckduckgo.i2p/?q={}'}
-c.content.blocking.enabled = True
-c.content.pdfjs = False
-c.content.proxy = 'http://127.0.0.1:4444'
-c.content.javascript.clipboard = 'none'
-c.content.canvas_reading = False
-c.content.webrtc_ip_handling_policy = 'disable-non-proxied-udp'
-c.content.webgl = False
-c.content.autoplay = False
-c.content.geolocation = False
-c.content.media.audio_capture = False
-c.content.media.video_capture = False
-c.content.media.audio_video_capture = False
-c.content.notifications.enabled = False
-c.content.mouse_lock = False
-c.content.javascript.enabled = False
-c.completion.web_history.max_items = 0
-config.set("content.javascript.enabled", True, "https://*")
-c.qt.chromium.experimental_web_platform_features = 'never'
+c.url.start_pages = 'socks5://127.0.0.1:1337'
+c.url.searchengines = {'DEFAULT': 'http://duckduckgo.com/?q={}'}
+c.content.proxy_dns_requests = True
+c.content.javascript.enabled = True
+
 c.colors.webpage.darkmode.enabled = True
 c.fonts.default_family = 'IosevkaTermNerdFont'
 c.fonts.default_size = '15pt'
-bg = '#23272e'
+
+bg = '#282c34'
 fg = '#abb2bf'
 black = '#3f4451'
 red = '#e05561'
@@ -41,6 +27,7 @@ brightmagenta = '#de73ff'
 brightcyan = '#4cd1e0'
 brightwhite = '#e6e6e6'
 selection = '#353a44'
+
 c.colors.completion.fg = fg
 c.colors.completion.odd.bg = black
 c.colors.completion.even.bg = bg
