@@ -3,9 +3,9 @@ mklabel gpt
 mkpart primary fat32 1MiB 513MiB
 set 1 esp on
 name 1 EFI
-mkpart primary linux-swap 513MiB 65GiB
+mkpart primary linux-swap 513MiB 16GiB
 name 2 swap
-mkpart primary ext4 65GiB 100%
+mkpart primary ext4 16GiB 100%
 name 3 root
 quit
 EOF
@@ -58,7 +58,9 @@ arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/foot'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/grim'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge gui-apps/wl-clipboard'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-editors/neovim'
-arch-chroot /mnt/gentoo /bin/bash -c 'emerge www-client/qutebrowser'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge media-sound/pulsemixer'
-arch-chroot /mnt/gentoo /bin/bash -c 'emerge --pretend --depclean'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge app-eselect/eselect-repository'
+arch-chroot /mnt/gentoo /bin/bash -c 'eselect repository add librewolf git https://codeberg.org/librewolf/gentoo.git'
+arch-chroot /mnt/gentoo /bin/bash -c 'emaint sync -r librewolf'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge www-client/librewolf'
 umount --recursive /mnt/gentoo/
