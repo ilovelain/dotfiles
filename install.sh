@@ -17,13 +17,15 @@ mkdir --parents /mnt/gentoo
 mount /dev/nvme0n1p3 /mnt/gentoo
 mkdir --parents /mnt/gentoo/efi
 mount /dev/nvme0n1p1 /mnt/gentoo/efi
-wget --directory-prefix=/mnt/gentoo https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/$(curl --silent https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl/latest-stage3-amd64-musl.txt | grep --only-matching '.*.tar.xz')
+wget --directory-prefix=/mnt/gentoo https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl-llvm/$(curl --silent https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl-llvm/latest-stage3-amd64-musl.txt | grep --only-matching '.*.tar.xz')
 tar xpvf /mnt/gentoo/*.tar.xz --xattrs-include='*.*' --numeric-owner --directory=/mnt/gentoo
 rm --force /mnt/gentoo/*.tar.xz
 cp --recursive ./root/* /mnt/gentoo/
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge-webrsync'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge --sync'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge llvm-core/clang llvm-core/llvm llvm-runtimes/compiler-rt llvm-runtimes/libunwind llvm-core/lld'
+arch-chroot /mnt/gentoo /bin/bash -c 'emerge llvm-core/clang llvm-core/llvm llvm-runtimes/libcxx llvm-runtimes/libcxxabi llvm-runtimes/compiler-rt llvm-runtimes/compiler-rt-sanitizers llvm-runtimes/libunwind llvm-core/lld'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge --verbose --update --deep --newuse @world'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-kernel/linux-firmware'
 arch-chroot /mnt/gentoo /bin/bash -c 'emerge sys-kernel/gentoo-kernel-bin'
