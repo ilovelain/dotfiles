@@ -1,5 +1,5 @@
 desktop-image: "background.png"
-message-color: "#EFF0F1"
+message-color: "#eff0f1"
 
 + boot_menu {
     left = 20%
@@ -7,11 +7,11 @@ message-color: "#EFF0F1"
     top = 20%
     height = 70%
 
-    item_color = "#EFF0F1"
+    item_color = "#eff0f1"
     item_height = 40
     item_spacing = 35
     
-    selected_item_color = "#FFFFFF"
+    selected_item_color = "#ffffff"
     selected_item_pixmap_style = "select_*.png"
 
     scrollbar = false
